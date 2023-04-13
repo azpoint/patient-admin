@@ -1,11 +1,18 @@
+//Components
+import Header from "./components/Header";
+import Form from "./components/Form";
+import PatiensList from "./components/PatiensList";
 
 function App() {
-
-  return (
-    <div className="App">
-      Hello
-    </div>
-  )
+    return (
+        <div className="container w-4/5 mx-auto m-10">
+            <Header />
+            <div className="mt-12 md:flex">
+                <Form />
+                <PatiensList />
+            </div>
+        </div>
+    );
 }
 
-export default App
+export default App;
