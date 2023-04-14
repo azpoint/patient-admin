@@ -1,7 +1,9 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function Form({patients, setPatients}) {
+//Components
+import Error from "./Error";
+
+function Form({patients, setPatients, patient}) {
     const [name, setName] = useState("");
     const [owner, setOwner] = useState("");
     const [email, setEmail] = useState("");
@@ -9,6 +11,23 @@ function Form({patients, setPatients}) {
     const [notes, setNotes] = useState("");
 
     const [error, setError] = useState(false)
+
+    useEffect(() => {
+        if(Object.keys(patient).length > 0) {
+            setName(patient.name)
+            setOwner(patient.owner)
+            setEmail(patient.email)
+            setDate(patient.date)
+            setNotes(patient.notes)
+        }
+    }, [patient])
+
+    const idGen = () => {
+        const random = Math.random().toString(36).substr(2)
+        const date = Date.now().toString(36)
+
+        return random + date
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,6 +38,8 @@ function Form({patients, setPatients}) {
           setTimeout(() => {
             setError(false)
           }, 3000);
+
+          return;
         }
 
         //Patient Data
@@ -27,7 +48,8 @@ function Form({patients, setPatients}) {
           owner,
           email,
           date,
-          notes
+          notes,
+          id: idGen()
         }
 
         setPatients([...patients, patientData])
@@ -143,14 +165,12 @@ function Form({patients, setPatients}) {
 
                 <input
                     type="submit"
-                    value="Save Data"
+                    value={patient.id ? "EDIT PATIENT" : "ADD PATIENT"}
                     className="bg-indigo-600 rounded-md w-full p-3 text-gray-50 hover:bg-indigo-400 cursor-pointer transition duration-200"
                 />
 
                 {error && (
-                  <p className="text-xl text-center font-semibold text-red-500 mt-4">
-                    All fields must be filled
-                  </p>
+                  <Error message={"All fields must be filled"} />
                 )}
             </form>
         </div>
