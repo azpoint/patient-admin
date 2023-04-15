@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 //Components
 import Error from "./Error";
 
-function Form({patients, setPatients, patient}) {
+function Form({patients, setPatients, patient, setPatient}) {
     const [name, setName] = useState("");
     const [owner, setOwner] = useState("");
     const [email, setEmail] = useState("");
@@ -48,11 +48,25 @@ function Form({patients, setPatients, patient}) {
           owner,
           email,
           date,
-          notes,
-          id: idGen()
+          notes
         }
 
-        setPatients([...patients, patientData])
+        if(patient.id) {
+            //Edit patient
+            patientData.id = patient.id
+
+            const patientsUpdated = patients.map(patientState => patientState.id === patient.id ? patientData : patientState) 
+
+            setPatients(patientsUpdated)
+            setPatient({})
+
+        } else {
+            //New patient
+            patientData.id = idGen()
+            setPatients([...patients, patientData])
+        }
+
+
 
         //Reset form values
         setName("")
@@ -135,7 +149,7 @@ function Form({patients, setPatients, patient}) {
                         htmlFor="medical-discharge"
                         className="block text-gray-700 uppercase font-semibold"
                     >
-                        Medical Discharge
+                        Appointment
                     </label>
                     <input
                         type="date"

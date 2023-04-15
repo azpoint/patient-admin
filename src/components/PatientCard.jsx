@@ -1,5 +1,12 @@
-function PatientCard({ patient, setPatient }) {
-    const { name, owner, email, date, notes } = patient;
+function PatientCard({ patient, setPatient, deletePatient }) {
+    const { name, owner, email, date, notes, id } = patient;
+
+    const handleDelete = () => {
+        const answer = confirm("Are you sure you want to delete this patient?")
+
+        answer ? deletePatient(id) : null
+        
+    }
 
     return (
         <div className="bg-gray-100 shadow-md rounded-lg pb-10 pt-5 px-5 mt-5">
@@ -25,7 +32,7 @@ function PatientCard({ patient, setPatient }) {
                 </p>
 
                 <p className="font-semibold uppercase">
-                    Discharge Date:{" "}
+                    Appointment:{" "}
                     <span className="font-normal normal-case">{date}</span>
                 </p>
 
@@ -47,6 +54,7 @@ function PatientCard({ patient, setPatient }) {
                 <button
                     type="button"
                     className="bg-red-600 hover:bg-red-400 text-gray-50 px-4 py-2 rounded-md uppercase font-semibold"
+                    onClick={handleDelete}
                 >
                     Delete
                 </button>

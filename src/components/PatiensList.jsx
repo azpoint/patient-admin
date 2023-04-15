@@ -1,6 +1,6 @@
 import PatientCard from "./PatientCard";
 
-function PatiensList({ patients, setPatient }) {
+function PatiensList({ patients, setPatient, deletePatient }) {
     
 
     return (
@@ -11,7 +11,11 @@ function PatiensList({ patients, setPatient }) {
                 <>
                     {patients.map((patient) => {
                         return (
-                            <PatientCard key={patient.id} patient={patient} setPatient={setPatient}/>
+                            <PatientCard key={patient.id}
+                            patient={patient}
+                            setPatient={setPatient}
+                            deletePatient={deletePatient}
+                            />
                         );
                     })}
                 </>
